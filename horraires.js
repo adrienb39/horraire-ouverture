@@ -19,15 +19,30 @@ function afficherHorraires() {
     horraires.forEach((horaire) => {
         const horaireElement = document.createElement('div');
         horaireElement.classList.add('card-text', 'border-top', 'd-flex', 'justify-content-between');
+        let iconHeure
+        let couleurIcon
+        let fondCouleurHoraire
+        if (horaire.jour === "Dimanche"){
+            iconHeure = `<i class="bi bi-moon-fill"></i>`
+            couleurIcon = "dark"
+            fondCouleurHoraire ="danger"
+        } else {
+            iconHeure =`<i class="bi bi-brightness-high-fill"></i>`
+            couleurIcon = "warning"
+            fondCouleurHoraire ="success"
+
+        }
 
         horaireElement.innerHTML = `
-            <div class="text-warning d-inline">
-                <i class="bi bi-brightness-high-fill"></i>
-                <div class="d-inline text-black">
+            <div class="text-`+couleurIcon+` d-inline"> `+
+            iconHeure
+            +`
+            <div class="d-inline text-black">
                     ${horaire.jour}
                 </div>
             </div>
-            <div>
+            <div class=" px-2 py-1 text-white rounded-pill bg-`+ fondCouleurHoraire+`">
+                <i class="bi bi-clock-fill"></i>
                 ${horaire.horraire}
             </div>
         `;
