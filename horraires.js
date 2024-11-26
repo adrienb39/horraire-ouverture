@@ -18,7 +18,7 @@ function afficherHorraires() {
 
     horraires.forEach((horaire) => {
         const horaireElement = document.createElement('div');
-        horaireElement.classList.add('card-text', 'border-top');
+        horaireElement.classList.add('card-text', 'border-top', 'd-flex', 'justify-content-between');
 
         horaireElement.innerHTML = `
             <div class="text-warning d-inline">
@@ -26,6 +26,9 @@ function afficherHorraires() {
                 <div class="d-inline text-black">
                     ${horaire.jour}
                 </div>
+            </div>
+            <div>
+                ${horaire.horraire}
             </div>
         `;
 
