@@ -36,4 +36,16 @@ function afficherHorraires() {
     });
 }
 
+function afficherStatus(){
+
+    const statudActuel = document.querySelector("#card-ouverture")
+    constr
+}
+
+
+
+
+
+
+
 document.addEventListener("DOMContentLoaded", afficherHorraires);
