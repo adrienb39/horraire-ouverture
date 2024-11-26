@@ -12,7 +12,7 @@ const horraires = [
 ];
 
 function afficherHorraires() {
-    const horrairesContainer = document.getElementById('horraires');
+    const horrairesContainer = document.querySelector('#horraires');
 
     horrairesContainer.innerHTML = '';
 
@@ -36,16 +36,46 @@ function afficherHorraires() {
     });
 }
 
-function afficherStatus(){
+function verifierEtatParHeure(saisieHeure) {
+    const statusContainer = document.querySelector('#verifie-heure');
+    const currentDate = new Date();
+    const currentDay = currentDate.toLocaleDateString('fr-FR', { weekday: 'long' }).charAt(0).toUpperCase() + currentDate.toLocaleDateString('fr-FR', { weekday: 'long' }).slice(1);
 
-    const statudActuel = document.querySelector("#card-ouverture")
-    constr
+    // Vérifier les horaires pour le jour actuel
+    const horaireJour = horraires.find(h => h.jour === currentDay);
+    const statusElement = document.createElement('div');
+
+    if (horaireJour && horaireJour.horraire !== "Fermé") {
+        const [start, end] = horaireJour.horraire.split('-');
+        const [startHour, startMinute] = start.split('h').map(Number);
+        const [endHour, endMinute] = end.split('h').map(Number);
+
+        const startTime = startHour * 100 + startMinute;
+        const endTime = endHour * 100 + endMinute;
+
+        const [inputHour, inputMinute] = saisieHeure.split(':').map(Number);
+        const inputTime = inputHour * 100 + inputMinute;
+
+        if (inputTime >= startTime && inputTime <= endTime) {
+            statusElement.innerHTML = `<div class="text-success">Le magasin est ouvert à ${saisieHeure}</div>`;
+        } else {
+            statusElement.innerHTML = `<div class="text-danger">Le magasin est fermé à ${saisieHeure}</div>`;
+        }
+    } else {
+        statusElement.innerHTML = `<div class="text-danger">Fermé</div>`;
+    }
+
+    statusContainer.innerHTML = '';
+    statusContainer.appendChild(statusElement);
 }
 
-
-
-
-
-
+document.querySelector("#verifier-btn").addEventListener("click", () => {
+    const saisieHeure = document.querySelector("#input-heure").value;
+    if (saisieHeure) {
+        verifierEtatParHeure(saisieHeure);
+    } else {
+        alert("Veuillez entrer une heure valide.");
+    }
+});
 
 document.addEventListener("DOMContentLoaded", afficherHorraires);

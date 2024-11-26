@@ -13,7 +13,7 @@
     <div class="container py-4">
         <div class="row justify-content-center">
             <div class="col-md-6 mb-4 text-center">
-                <h1><i class="fa-solid fa-clock" style="color: #74C0FC;"></i>Horaires d'ouverture</h1>
+                <h1><i class="fa-solid fa-clock" style="color: #74C0FC;"></i> Horaires d'ouverture</h1>
             </div>
 
             <div class="card my-2" id="card-horaire">
@@ -35,6 +35,17 @@
                 </div>
             </div>
 
+            <div class="card my-2" id="card-verifie-horraire">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fa-solid fa-clock" style="color: #74C0FC;"></i> Vérifier une heure</h5>
+                    <div class="mt-3">
+                        <input type="time" id="input-heure" class="form-control" />
+                        <button class="btn btn-primary mt-2" id="verifier-btn">Vérifier</button>
+                    </div>
+                    <div class="mt-3" id="verifie-heure">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="horraires.js"></script>
