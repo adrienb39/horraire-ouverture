@@ -123,8 +123,8 @@ document.querySelector("#verifier-btn").addEventListener("click", () => {
         verifierEtatParHeure(saisieHeure);
     } else {
         statusElement.innerHTML = `<div class="text-warning">Veuillez entrer une heure valide.</div>`
+        statusContainer.innerHTML = '';
     }
-    statusContainer.innerHTML = '';
     statusContainer.appendChild(statusElement)
 });
 
