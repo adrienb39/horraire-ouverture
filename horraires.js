@@ -36,6 +36,37 @@ function afficherHorraires() {
     });
 }
 
+function estOuvertAujourdHui() {
+    const statusContainer = document.querySelector('#ouverture');
+    const currentDate = new Date();
+    const currentDay = currentDate.toLocaleDateString('fr-FR', {weekday: 'long'}).charAt(0).toUpperCase() + currentDate.toLocaleDateString('fr-FR', {weekday: 'long'}).slice(1);
+    const currentTime = currentDate.getHours() * 100 + currentDate.getMinutes();
+
+    const horaireJour = horraires.find(h => h.jour === currentDay);
+    const statusElement = document.createElement('div');
+
+    if (horaireJour && horaireJour.horraire !== "Fermé") {
+        const [start, end] = horaireJour.horraire.split('-');
+        const [startHour, startMinute] = start.split('h').map(Number);
+        const [endHour, endMinute] = end.split('h').map(Number);
+
+        const startTime = startHour * 100 + startMinute;
+        const endTime = endHour * 100 + endMinute;
+
+        if (currentTime >= startTime && currentTime <= endTime) {
+            statusContainer.classList.add("bg-success", "border-success")
+            statusElement.innerHTML = `<div>Ouvert</div>`;
+        } else {
+            statusContainer.classList.add("bg-danger", "border-danger")
+            statusElement.innerHTML = `<div>Fermé</div>`;
+        }
+    } else {
+        statusElement.innerHTML = `<div>Fermé</div>`;
+    }
+
+    statusContainer.appendChild(statusElement);
+}
+
 function verifierEtatParHeure(saisieHeure) {
     const statusContainer = document.querySelector('#verifie-heure');
     const currentDate = new Date();
@@ -71,11 +102,18 @@ function verifierEtatParHeure(saisieHeure) {
 
 document.querySelector("#verifier-btn").addEventListener("click", () => {
     const saisieHeure = document.querySelector("#input-heure").value;
+    const statusContainer = document.querySelector('#verifie-heure');
+    const statusElement = document.createElement('div');
     if (saisieHeure) {
         verifierEtatParHeure(saisieHeure);
     } else {
-        alert("Veuillez entrer une heure valide.");
+        statusElement.innerHTML = `<div class="text-warning">Veuillez entrer une heure valide.</div>`
     }
+    statusContainer.innerHTML = '';
+    statusContainer.appendChild(statusElement)
 });
 
-document.addEventListener("DOMContentLoaded", afficherHorraires);
+document.addEventListener("DOMContentLoaded", () => {
+    afficherHorraires();
+    estOuvertAujourdHui();
+});
